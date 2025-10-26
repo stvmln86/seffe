@@ -22,7 +22,7 @@ func TestCreate(t *testing.T) {
 
 func TestExists(t *testing.T) {
 	// setup
-	orig := test.MockFile(t, "name.extn", "")
+	orig := test.MockFile(t, "alpha.extn")
 
 	// success - true
 	okay := Exists(orig)
@@ -35,21 +35,21 @@ func TestExists(t *testing.T) {
 
 func TestRead(t *testing.T) {
 	// setup
-	orig := test.MockFile(t, "name.extn", "body")
+	orig := test.MockFile(t, "alpha.extn")
 
 	// success
 	body, err := Read(orig)
-	assert.Equal(t, "body", body)
+	assert.Equal(t, "Alpha note.\n", body)
 	assert.NoError(t, err)
 }
 
 func TestRename(t *testing.T) {
 	// setup
-	orig := test.MockFile(t, "name.extn", "")
-	dest := strings.Replace(orig, "name.extn", "test.extn", 1)
+	orig := test.MockFile(t, "alpha.extn")
+	dest := strings.Replace(orig, "alpha.extn", "name.extn", 1)
 
 	// success
-	err := Rename(orig, "test")
+	err := Rename(orig, "name")
 	assert.NoFileExists(t, orig)
 	assert.FileExists(t, dest)
 	assert.NoError(t, err)
@@ -57,7 +57,7 @@ func TestRename(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 	// setup
-	orig := test.MockFile(t, "name.extn", "")
+	orig := test.MockFile(t, "alpha.extn")
 
 	// success
 	err := Update(orig, "body", 0640)

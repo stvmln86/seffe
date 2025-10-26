@@ -11,7 +11,7 @@ import (
 func TestAssertFile(t *testing.T) {
 	// setup
 	dire := t.TempDir()
-	dest := filepath.Join(dire, "base.extn")
+	dest := filepath.Join(dire, "name.extn")
 	os.WriteFile(dest, []byte("body"), 0640)
 
 	// success
@@ -24,16 +24,14 @@ func TestMockDire(t *testing.T) {
 	assert.NotEmpty(t, dire)
 
 	// confirm - directory contents
-	files, _ := mockFS.ReadDir(".")
-	for _, file := range files {
-		orig := filepath.Join(dire, file.Name())
-		bytes, _ := mockFS.ReadFile(file.Name())
-		AssertFile(t, orig, string(bytes))
+	for base, body := range MockFiles {
+		orig := filepath.Join(dire, base)
+		AssertFile(t, orig, body)
 	}
 }
 
 func TestMockFile(t *testing.T) {
 	// success
-	orig := MockFile(t, "base.extn", "body")
-	AssertFile(t, orig, "body")
+	orig := MockFile(t, "alpha.extn")
+	AssertFile(t, orig, "Alpha note.\n")
 }

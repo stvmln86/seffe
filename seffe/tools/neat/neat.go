@@ -4,7 +4,6 @@ package neat
 import (
 	"path/filepath"
 	"strings"
-	"time"
 	"unicode"
 )
 
@@ -33,10 +32,4 @@ func Name(name string) string {
 	}
 
 	return strings.Trim(string(chars), "-")
-}
-
-// Time returns a local Time object from a YYYY-MM-DD string.
-func Time(date string) time.Time {
-	tobj, _ := time.Parse("2006-01-02", date)
-	return tobj.In(time.Local)
 }

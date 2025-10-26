@@ -2,7 +2,6 @@
 package test
 
 import (
-	"embed"
 	"os"
 	"path/filepath"
 	"testing"
@@ -10,8 +9,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//go:embed *.extn *.json
-var mockFS embed.FS
+// MockFiles is a base:body map of mock files for unit testing.
+var MockFiles = map[string]string{
+	"alpha.extn": "Alpha note.\n",
+	"bravo.extn": "Bravo note.\n",
+}
 
 // AssertFile asserts a file's body is equal to a string.
 func AssertFile(t *testing.T, orig, want string) {
@@ -20,22 +22,12 @@ func AssertFile(t *testing.T, orig, want string) {
 	assert.NoError(t, err)
 }
 
-// MockDire returns the path to a temporary directory containing embedded mock files.
+// MockDire returns a temporary directory containing all MockFiles entries.
 func MockDire(t *testing.T) string {
-	files, err := mockFS.ReadDir(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-
 	dire := t.TempDir()
-	for _, file := range files {
-		dest := filepath.Join(dire, file.Name())
-		bytes, err := mockFS.ReadFile(file.Name())
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if err := os.WriteFile(dest, bytes, 0640); err != nil {
+	for base, body := range MockFiles {
+		dest := filepath.Join(dire, base)
+		if err := os.WriteFile(dest, []byte(body), 0640); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -43,11 +35,11 @@ func MockDire(t *testing.T) string {
 	return dire
 }
 
-// MockFile returns the path to a temporary file containing a string.
-func MockFile(t *testing.T, base, body string) string {
+// MockFile returns a temporary file containing a MockFiles entry.
+func MockFile(t *testing.T, base string) string {
 	dire := t.TempDir()
 	dest := filepath.Join(dire, base)
-	if err := os.WriteFile(dest, []byte(body), 0640); err != nil {
+	if err := os.WriteFile(dest, []byte(MockFiles[base]), 0640); err != nil {
 		t.Fatal(err)
 	}
 
