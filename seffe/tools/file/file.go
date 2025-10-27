@@ -45,24 +45,24 @@ func Read(orig string) (string, error) {
 	return string(bytes), nil
 }
 
-// Reextn moves a file to a new extension.
-func Reextn(orig, name string) error {
-	dest := path.Reextn(orig, name)
+// Reextn moves a file to a new extension and returns the new path.
+func Reextn(orig, extn string) (string, error) {
+	dest := path.Reextn(orig, extn)
 	if err := os.Rename(orig, dest); err != nil {
-		return fmt.Errorf("cannot rename file %q - %w", orig, err)
+		return "", fmt.Errorf("cannot rename file %q - %w", orig, err)
 	}
 
-	return nil
+	return dest, nil
 }
 
-// Rename moves a file to a new name.
-func Rename(orig, name string) error {
+// Rename moves a file to a new name and returns the new path.
+func Rename(orig, name string) (string, error) {
 	dest := path.Rename(orig, name)
 	if err := os.Rename(orig, dest); err != nil {
-		return fmt.Errorf("cannot rename file %q - %w", orig, err)
+		return "", fmt.Errorf("cannot rename file %q - %w", orig, err)
 	}
 
-	return nil
+	return dest, nil
 }
 
 // Search returns true if a file's body contains a case-insensitive substring.

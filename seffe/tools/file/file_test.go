@@ -2,7 +2,6 @@ package file
 
 import (
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -58,24 +57,24 @@ func TestRead(t *testing.T) {
 func TestReextn(t *testing.T) {
 	// setup
 	orig := test.MockFile(t, "alpha.extn")
-	dest := strings.Replace(orig, "alpha.extn", "alpha.test", 1)
 
 	// success
-	err := Reextn(orig, ".test")
+	dest, err := Reextn(orig, ".test")
 	assert.NoFileExists(t, orig)
 	assert.FileExists(t, dest)
+	assert.Contains(t, dest, "alpha.test")
 	assert.NoError(t, err)
 }
 
 func TestRename(t *testing.T) {
 	// setup
 	orig := test.MockFile(t, "alpha.extn")
-	dest := strings.Replace(orig, "alpha.extn", "test.extn", 1)
 
 	// success
-	err := Rename(orig, "test")
+	dest, err := Rename(orig, "test")
 	assert.NoFileExists(t, orig)
 	assert.FileExists(t, dest)
+	assert.Contains(t, dest, "test.extn")
 	assert.NoError(t, err)
 }
 
