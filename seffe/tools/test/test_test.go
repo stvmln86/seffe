@@ -21,7 +21,7 @@ func TestAssertFile(t *testing.T) {
 func TestMockDire(t *testing.T) {
 	// success
 	dire := MockDire(t)
-	assert.NotEmpty(t, dire)
+	assert.DirExists(t, dire)
 
 	// confirm - directory contents
 	for base, body := range MockFiles {
