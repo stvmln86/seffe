@@ -20,9 +20,15 @@ func New(orig string, mode os.FileMode) *Note {
 	return &Note{orig, mode}
 }
 
-// Delete "deletes" the Note by changing its extension to ".trash".
+// Delete changes the Note's extension to ".trash" and updates the Note's path.
 func (n *Note) Delete() error {
-	return file.Reextn(n.Orig, ".trash")
+	dest, err := file.Reextn(n.Orig, ".trash")
+	if err != nil {
+		return err
+	}
+
+	n.Orig = dest
+	return nil
 }
 
 // Exists returns true if the Note exists.
@@ -47,10 +53,16 @@ func (n *Note) Read() (string, error) {
 	return neat.Body(body), err
 }
 
-// Rename changes the Note to a new name.
+// Rename changes the Note to a new name and updates the Note's path.
 func (n *Note) Rename(name string) error {
 	name = neat.Name(name)
-	return file.Rename(n.Orig, name)
+	dest, err := file.Rename(n.Orig, name)
+	if err != nil {
+		return err
+	}
+
+	n.Orig = dest
+	return nil
 }
 
 // Search returns true if the Note's body contains a case-insensitive substring.

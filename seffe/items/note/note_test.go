@@ -2,7 +2,6 @@ package note
 
 import (
 	"os"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -24,12 +23,13 @@ func TestNew(t *testing.T) {
 func TestDelete(t *testing.T) {
 	// setup
 	note := mockNote(t)
-	dest := strings.Replace(note.Orig, "alpha.extn", "alpha.trash", 1)
+	orig := note.Orig
 
 	// success
 	err := note.Delete()
-	assert.NoFileExists(t, note.Orig)
-	assert.FileExists(t, dest)
+	assert.NoFileExists(t, orig)
+	assert.FileExists(t, note.Orig)
+	assert.Contains(t, note.Orig, "alpha.trash")
 	assert.NoError(t, err)
 }
 
@@ -73,12 +73,13 @@ func TestRead(t *testing.T) {
 func TestRename(t *testing.T) {
 	// setup
 	note := mockNote(t)
-	dest := strings.Replace(note.Orig, "alpha.extn", "name.extn", 1)
+	orig := note.Orig
 
 	// success
 	err := note.Rename("name")
-	assert.NoFileExists(t, note.Orig)
-	assert.FileExists(t, dest)
+	assert.NoFileExists(t, orig)
+	assert.FileExists(t, note.Orig)
+	assert.Contains(t, note.Orig, "name.extn")
 	assert.NoError(t, err)
 }
 
