@@ -11,7 +11,7 @@ func Dire(orig string) string {
 	return filepath.Dir(orig)
 }
 
-// Extn returns a path's extension with the leading dot.
+// Extn returns a path's extension with a leading dot, or an empty string.
 func Extn(orig string) string {
 	base := filepath.Base(orig)
 	if clip := strings.Index(base, "."); clip != -1 {
@@ -21,7 +21,7 @@ func Extn(orig string) string {
 	return ""
 }
 
-// Join returns a joined path from a directory, name and extension.
+// Join returns a path from a directory, name and extension.
 func Join(dire, name, extn string) string {
 	return filepath.Join(dire, name+extn)
 }
@@ -34,7 +34,7 @@ func Match(orig, text string) bool {
 	return strings.HasPrefix(name, text)
 }
 
-// Name returns a path's name without the extension.
+// Name returns a path's name without an extension.
 func Name(orig string) string {
 	base := filepath.Base(orig)
 	if clip := strings.Index(base, "."); clip != -1 {
