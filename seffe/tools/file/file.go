@@ -35,7 +35,7 @@ func List(dire, extn string) []string {
 	return origs
 }
 
-// Read returns an existing file's body as a string.
+// Read returns a file's body as a string.
 func Read(orig string) (string, error) {
 	bytes, err := os.ReadFile(orig)
 	if err != nil {
@@ -45,7 +45,7 @@ func Read(orig string) (string, error) {
 	return string(bytes), nil
 }
 
-// Reextn moves an existing file to a new extension.
+// Reextn moves a file to a new extension.
 func Reextn(orig, name string) error {
 	dest := path.Reextn(orig, name)
 	if err := os.Rename(orig, dest); err != nil {
@@ -55,7 +55,7 @@ func Reextn(orig, name string) error {
 	return nil
 }
 
-// Rename moves an existing file to a new name.
+// Rename moves a file to a new name.
 func Rename(orig, name string) error {
 	dest := path.Rename(orig, name)
 	if err := os.Rename(orig, dest); err != nil {
@@ -77,7 +77,7 @@ func Search(orig, text string) (bool, error) {
 	return strings.Contains(body, text), nil
 }
 
-// Update overwrites an existing file's body with a string.
+// Update overwrites a file's body with a string.
 func Update(orig, body string, mode os.FileMode) error {
 	if err := os.WriteFile(orig, []byte(body), mode); err != nil {
 		return fmt.Errorf("cannot update file %q - %w", orig, err)

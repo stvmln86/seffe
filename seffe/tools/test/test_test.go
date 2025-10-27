@@ -12,10 +12,10 @@ func TestAssertFile(t *testing.T) {
 	// setup
 	dire := t.TempDir()
 	dest := filepath.Join(dire, "name.extn")
-	os.WriteFile(dest, []byte("body"), 0640)
+	os.WriteFile(dest, []byte("Body.\n"), 0640)
 
 	// success
-	AssertFile(t, dest, "body")
+	AssertFile(t, dest, "Body.\n")
 }
 
 func TestMockDire(t *testing.T) {

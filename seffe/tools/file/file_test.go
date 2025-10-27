@@ -15,8 +15,8 @@ func TestCreate(t *testing.T) {
 	dest := filepath.Join(dire, "name.extn")
 
 	// success
-	err := Create(dest, "body", 0640)
-	test.AssertFile(t, dest, "body")
+	err := Create(dest, "Body.\n", 0640)
+	test.AssertFile(t, dest, "Body.\n")
 	assert.NoError(t, err)
 }
 
@@ -99,7 +99,7 @@ func TestUpdate(t *testing.T) {
 	orig := test.MockFile(t, "alpha.extn")
 
 	// success
-	err := Update(orig, "body", 0640)
-	test.AssertFile(t, orig, "body")
+	err := Update(orig, "Body.\n", 0640)
+	test.AssertFile(t, orig, "Body.\n")
 	assert.NoError(t, err)
 }
