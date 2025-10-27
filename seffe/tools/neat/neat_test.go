@@ -18,7 +18,7 @@ func TestDire(t *testing.T) {
 	assert.Equal(t, "/dire", dire)
 }
 
-func TextExtn(t *testing.T) {
+func TestExtn(t *testing.T) {
 	// success - full extension
 	extn := Extn("\t.EXTN\n")
 	assert.Equal(t, ".extn", extn)

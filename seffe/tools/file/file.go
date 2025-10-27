@@ -14,10 +14,6 @@ import (
 
 // Create creates a new file with a body string.
 func Create(dest, body string, mode os.FileMode) error {
-	if Exists(dest) {
-		return fmt.Errorf("cannot create file %q - already exists", dest)
-	}
-
 	if err := os.WriteFile(dest, []byte(body), mode); err != nil {
 		return fmt.Errorf("cannot create file %q - %w", dest, err)
 	}
@@ -41,10 +37,6 @@ func List(dire, extn string) []string {
 
 // Read returns an existing file's body as a string.
 func Read(orig string) (string, error) {
-	if !Exists(orig) {
-		return "", fmt.Errorf("cannot read file %q - does not exist", orig)
-	}
-
 	bytes, err := os.ReadFile(orig)
 	if err != nil {
 		return "", fmt.Errorf("cannot read file %q - %w", orig, err)
@@ -55,10 +47,6 @@ func Read(orig string) (string, error) {
 
 // Reextn moves an existing file to a new extension.
 func Reextn(orig, name string) error {
-	if !Exists(orig) {
-		return fmt.Errorf("cannot rename file %q - does not exist", orig)
-	}
-
 	dest := path.Reextn(orig, name)
 	if err := os.Rename(orig, dest); err != nil {
 		return fmt.Errorf("cannot rename file %q - %w", orig, err)
@@ -69,10 +57,6 @@ func Reextn(orig, name string) error {
 
 // Rename moves an existing file to a new name.
 func Rename(orig, name string) error {
-	if !Exists(orig) {
-		return fmt.Errorf("cannot rename file %q - does not exist", orig)
-	}
-
 	dest := path.Rename(orig, name)
 	if err := os.Rename(orig, dest); err != nil {
 		return fmt.Errorf("cannot rename file %q - %w", orig, err)
@@ -83,10 +67,6 @@ func Rename(orig, name string) error {
 
 // Search returns true if a file's body contains a case-insensitive substring.
 func Search(orig, text string) (bool, error) {
-	if !Exists(orig) {
-		return false, fmt.Errorf("cannot search file %q - does not exist", orig)
-	}
-
 	bytes, err := os.ReadFile(orig)
 	if err != nil {
 		return false, fmt.Errorf("cannot search file %q - %w", orig, err)
@@ -99,10 +79,6 @@ func Search(orig, text string) (bool, error) {
 
 // Update overwrites an existing file's body with a string.
 func Update(orig, body string, mode os.FileMode) error {
-	if !Exists(orig) {
-		return fmt.Errorf("cannot update file %q - does not exist", orig)
-	}
-
 	if err := os.WriteFile(orig, []byte(body), mode); err != nil {
 		return fmt.Errorf("cannot update file %q - %w", orig, err)
 	}
