@@ -26,7 +26,6 @@ func AssertFile(t *testing.T, orig, body string) {
 // MockDire returns a temporary directory containing all MockFiles entries.
 func MockDire(t *testing.T) string {
 	dire := t.TempDir()
-
 	for base, body := range MockFiles {
 		dest := filepath.Join(dire, base)
 		if err := os.WriteFile(dest, []byte(body), 0640); err != nil {
@@ -41,7 +40,6 @@ func MockDire(t *testing.T) string {
 func MockFile(t *testing.T, base string) string {
 	dire := t.TempDir()
 	dest := filepath.Join(dire, base)
-
 	if err := os.WriteFile(dest, []byte(MockFiles[base]), 0640); err != nil {
 		t.Fatal(err)
 	}

@@ -7,15 +7,24 @@ import (
 	"unicode"
 )
 
+// Body returns a whitespace-trimmed body with a trailing newline.
+func Body(body string) string {
+	return strings.TrimSpace(body) + "\n"
+}
+
 // Dire returns a sanitised directory path.
 func Dire(dire string) string {
 	return filepath.Clean(dire)
 }
 
-// Extn returns a lowercase extension with the leading dot.
+// Extn returns a lowercase extension with a leading dot, or an empty string.
 func Extn(extn string) string {
 	extn = strings.ToLower(extn)
 	extn = strings.TrimSpace(extn)
+	if extn == "" {
+		return ""
+	}
+
 	return "." + strings.TrimPrefix(extn, ".")
 }
 

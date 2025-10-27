@@ -6,6 +6,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestBody(t *testing.T) {
+	// success
+	body := Body("\tBody.\n")
+	assert.Equal(t, "Body.\n", body)
+}
+
 func TestDire(t *testing.T) {
 	// success
 	dire := Dire("/././dire")
@@ -13,9 +19,17 @@ func TestDire(t *testing.T) {
 }
 
 func TextExtn(t *testing.T) {
-	// success
-	extn := Extn("\tEXTN\n")
+	// success - full extension
+	extn := Extn("\t.EXTN\n")
 	assert.Equal(t, ".extn", extn)
+
+	// success - empty extension
+	extn = Extn("\t.\n")
+	assert.Equal(t, ".", extn)
+
+	// success - no extension
+	extn = Extn("\n")
+	assert.Equal(t, "", extn)
 }
 
 func TestName(t *testing.T) {
