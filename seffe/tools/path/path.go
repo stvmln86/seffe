@@ -26,6 +26,14 @@ func Join(dire, name, extn string) string {
 	return filepath.Join(dire, name+extn)
 }
 
+// Match returns true if a path's name begins with a case-insensitive substring.
+func Match(orig, text string) bool {
+	name := Name(orig)
+	name = strings.ToLower(name)
+	text = strings.ToLower(text)
+	return strings.HasPrefix(name, text)
+}
+
 // Name returns a path's name without the extension.
 func Name(orig string) string {
 	base := filepath.Base(orig)
@@ -34,6 +42,13 @@ func Name(orig string) string {
 	}
 
 	return base
+}
+
+// Reextn returns a path with a new extension.
+func Reextn(orig, extn string) string {
+	dire := Dire(orig)
+	name := Name(orig)
+	return Join(dire, name, extn)
 }
 
 // Rename returns a path with a new name.

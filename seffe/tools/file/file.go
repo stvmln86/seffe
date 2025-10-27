@@ -42,6 +42,8 @@ func Read(orig string) (string, error) {
 	return string(bytes), nil
 }
 
+// Reextn
+
 // Rename moves an existing file to a new name.
 func Rename(orig, name string) error {
 	if !Exists(orig) {
@@ -55,6 +57,8 @@ func Rename(orig, name string) error {
 
 	return nil
 }
+
+// Search
 
 // Update overwrites an existing file's body with a string.
 func Update(orig, body string, mode os.FileMode) error {
