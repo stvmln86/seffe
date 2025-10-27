@@ -43,15 +43,42 @@ func TestRead(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestReextn(t *testing.T) {
+	// setup
+	orig := test.MockFile(t, "alpha.extn")
+	dest := strings.Replace(orig, "alpha.extn", "alpha.test", 1)
+
+	// success
+	err := Reextn(orig, ".test")
+	assert.NoFileExists(t, orig)
+	assert.FileExists(t, dest)
+	assert.NoError(t, err)
+}
+
 func TestRename(t *testing.T) {
 	// setup
 	orig := test.MockFile(t, "alpha.extn")
-	dest := strings.Replace(orig, "alpha.extn", "name.extn", 1)
+	dest := strings.Replace(orig, "alpha.extn", "test.extn", 1)
 
 	// success
-	err := Rename(orig, "name")
+	err := Rename(orig, "test")
 	assert.NoFileExists(t, orig)
 	assert.FileExists(t, dest)
+	assert.NoError(t, err)
+}
+
+func TestSearch(t *testing.T) {
+	// setup
+	orig := test.MockFile(t, "alpha.extn")
+
+	// success - true
+	okay, err := Search(orig, "ALPH")
+	assert.True(t, okay)
+	assert.NoError(t, err)
+
+	// success - false
+	okay, err = Search(orig, "nope")
+	assert.False(t, okay)
 	assert.NoError(t, err)
 }
 

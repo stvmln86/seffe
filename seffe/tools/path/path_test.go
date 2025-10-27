@@ -33,13 +33,13 @@ func TestJoin(t *testing.T) {
 }
 
 func TestMatch(t *testing.T) {
-	// success - match
-	match := Match("/dire/name.extn", "NAM")
-	assert.True(t, match)
+	// success - true
+	okay := Match("/dire/name.extn", "NAM")
+	assert.True(t, okay)
 
-	// success - no match
-	match = Match("/dire/name.extn", "nope")
-	assert.False(t, match)
+	// success - false
+	okay = Match("/dire/name.extn", "nope")
+	assert.False(t, okay)
 }
 
 func TestName(t *testing.T) {

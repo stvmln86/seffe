@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/stvmln86/seffe/seffe/tools/path"
 )
@@ -42,7 +43,19 @@ func Read(orig string) (string, error) {
 	return string(bytes), nil
 }
 
-// Reextn
+// Reextn moves an existing file to a new extension.
+func Reextn(orig, name string) error {
+	if !Exists(orig) {
+		return fmt.Errorf("cannot rename file %q - does not exist", orig)
+	}
+
+	dest := path.Reextn(orig, name)
+	if err := os.Rename(orig, dest); err != nil {
+		return fmt.Errorf("cannot rename file %q - %w", orig, err)
+	}
+
+	return nil
+}
 
 // Rename moves an existing file to a new name.
 func Rename(orig, name string) error {
@@ -58,7 +71,21 @@ func Rename(orig, name string) error {
 	return nil
 }
 
-// Search
+// Search returns true if a file's body contains a case-insensitive substring.
+func Search(orig, text string) (bool, error) {
+	if !Exists(orig) {
+		return false, fmt.Errorf("cannot search file %q - does not exist", orig)
+	}
+
+	bytes, err := os.ReadFile(orig)
+	if err != nil {
+		return false, fmt.Errorf("cannot search file %q - %w", orig, err)
+	}
+
+	text = strings.ToLower(text)
+	body := strings.ToLower(string(bytes))
+	return strings.Contains(body, text), nil
+}
 
 // Update overwrites an existing file's body with a string.
 func Update(orig, body string, mode os.FileMode) error {
