@@ -20,6 +20,18 @@ func TestCreate(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestList(t *testing.T) {
+	// setup
+	dire := test.MockDire(t)
+
+	// success
+	origs := List(dire, ".extn")
+	assert.Equal(t, []string{
+		filepath.Join(dire, "alpha.extn"),
+		filepath.Join(dire, "bravo.extn"),
+	}, origs)
+}
+
 func TestExists(t *testing.T) {
 	// setup
 	orig := test.MockFile(t, "alpha.extn")

@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/stvmln86/seffe/seffe/tools/path"
@@ -27,6 +29,14 @@ func Create(dest, body string, mode os.FileMode) error {
 func Exists(orig string) bool {
 	_, err := os.Stat(orig)
 	return !errors.Is(err, os.ErrNotExist)
+}
+
+// List returns all files in a directory matching an extension.
+func List(dire, extn string) []string {
+	glob := filepath.Join(dire, "*"+extn)
+	origs, _ := filepath.Glob(glob)
+	slices.Sort(origs)
+	return origs
 }
 
 // Read returns an existing file's body as a string.
