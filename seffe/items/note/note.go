@@ -20,7 +20,7 @@ func New(orig string, mode os.FileMode) *Note {
 	return &Note{orig, mode}
 }
 
-// Delete changes the Note's extension to ".trash" and updates the Note's path.
+// Delete moves the Note to a ".trash" extension and updates the Note's path.
 func (n *Note) Delete() error {
 	dest, err := file.Reextn(n.Orig, ".trash")
 	if err != nil {
@@ -53,7 +53,7 @@ func (n *Note) Read() (string, error) {
 	return neat.Body(body), err
 }
 
-// Rename changes the Note to a new name and updates the Note's path.
+// Rename moves the Note to a new name and updates the Note's path.
 func (n *Note) Rename(name string) error {
 	name = neat.Name(name)
 	dest, err := file.Rename(n.Orig, name)
@@ -70,8 +70,8 @@ func (n *Note) Search(text string) (bool, error) {
 	return file.Search(n.Orig, text)
 }
 
-// Update overwrites the Note's body with a string.
-func (n *Note) Update(body string) error {
+// Write overwrites the Note's body with a string.
+func (n *Note) Write(body string) error {
 	body = neat.Body(body)
-	return file.Update(n.Orig, body, n.Mode)
+	return file.Write(n.Orig, body, n.Mode)
 }

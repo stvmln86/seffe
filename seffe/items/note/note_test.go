@@ -93,12 +93,12 @@ func TestSearch(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestUpdate(t *testing.T) {
+func TestWrite(t *testing.T) {
 	// setup
 	note := mockNote(t)
 
 	// success
-	err := note.Update("Body.\n")
+	err := note.Write("Body.\n")
 	test.AssertFile(t, note.Orig, "Body.\n")
 	assert.NoError(t, err)
 }

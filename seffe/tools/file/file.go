@@ -12,15 +12,6 @@ import (
 	"github.com/stvmln86/seffe/seffe/tools/path"
 )
 
-// Create creates a new file with a body string.
-func Create(dest, body string, mode os.FileMode) error {
-	if err := os.WriteFile(dest, []byte(body), mode); err != nil {
-		return fmt.Errorf("cannot create file %q - %w", dest, err)
-	}
-
-	return nil
-}
-
 // Exists returns true if a file exists.
 func Exists(orig string) bool {
 	_, err := os.Stat(orig)
@@ -77,8 +68,8 @@ func Search(orig, text string) (bool, error) {
 	return strings.Contains(body, text), nil
 }
 
-// Update overwrites a file's body with a string.
-func Update(orig, body string, mode os.FileMode) error {
+// Write overwrites a new or existing file's body with a string.
+func Write(orig, body string, mode os.FileMode) error {
 	if err := os.WriteFile(orig, []byte(body), mode); err != nil {
 		return fmt.Errorf("cannot update file %q - %w", orig, err)
 	}

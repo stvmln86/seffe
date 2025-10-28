@@ -23,12 +23,16 @@ func TestExtn(t *testing.T) {
 	extn := Extn("\t.EXTN\n")
 	assert.Equal(t, ".extn", extn)
 
+	// success - double extension
+	extn = Extn("\t.EXTN.EXTN\n")
+	assert.Equal(t, ".extn.extn", extn)
+
 	// success - empty extension
 	extn = Extn("\t.\n")
 	assert.Equal(t, ".", extn)
 
 	// success - no extension
-	extn = Extn("\n")
+	extn = Extn("\t\n")
 	assert.Equal(t, "", extn)
 }
 

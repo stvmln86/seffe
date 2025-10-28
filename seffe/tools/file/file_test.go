@@ -8,17 +8,6 @@ import (
 	"github.com/stvmln86/seffe/seffe/tools/test"
 )
 
-func TestCreate(t *testing.T) {
-	// setup
-	dire := t.TempDir()
-	dest := filepath.Join(dire, "name.extn")
-
-	// success
-	err := Create(dest, "Body.\n", 0640)
-	test.AssertFile(t, dest, "Body.\n")
-	assert.NoError(t, err)
-}
-
 func TestList(t *testing.T) {
 	// setup
 	dire := test.MockDire(t)
@@ -59,10 +48,10 @@ func TestReextn(t *testing.T) {
 	orig := test.MockFile(t, "alpha.extn")
 
 	// success
-	dest, err := Reextn(orig, ".test")
+	dest, err := Reextn(orig, ".new-extn")
 	assert.NoFileExists(t, orig)
 	assert.FileExists(t, dest)
-	assert.Contains(t, dest, "alpha.test")
+	assert.Contains(t, dest, "alpha.new-extn")
 	assert.NoError(t, err)
 }
 
@@ -71,10 +60,10 @@ func TestRename(t *testing.T) {
 	orig := test.MockFile(t, "alpha.extn")
 
 	// success
-	dest, err := Rename(orig, "test")
+	dest, err := Rename(orig, "new-name")
 	assert.NoFileExists(t, orig)
 	assert.FileExists(t, dest)
-	assert.Contains(t, dest, "test.extn")
+	assert.Contains(t, dest, "new-name.extn")
 	assert.NoError(t, err)
 }
 
@@ -93,12 +82,12 @@ func TestSearch(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestUpdate(t *testing.T) {
+func TestWrite(t *testing.T) {
 	// setup
 	orig := test.MockFile(t, "alpha.extn")
 
 	// success
-	err := Update(orig, "Body.\n", 0640)
+	err := Write(orig, "Body.\n", 0640)
 	test.AssertFile(t, orig, "Body.\n")
 	assert.NoError(t, err)
 }
