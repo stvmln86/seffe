@@ -30,15 +30,17 @@ func Extn(extn string) string {
 
 // Name returns a lowercase alphanumeric name with dashes.
 func Name(name string) string {
-	var chars []rune
+	var bldr strings.Builder
+	bldr.Grow(len(name))
+
 	for _, char := range strings.ToLower(name) {
 		switch {
 		case unicode.In(char, unicode.Letter, unicode.Digit):
-			chars = append(chars, char)
+			bldr.WriteRune(char)
 		case unicode.IsSpace(char) || char == '-' || char == '_':
-			chars = append(chars, '-')
+			bldr.WriteRune('-')
 		}
 	}
 
-	return strings.Trim(string(chars), "-")
+	return strings.Trim(bldr.String(), "-")
 }
