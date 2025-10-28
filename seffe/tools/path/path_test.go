@@ -17,6 +17,10 @@ func TestExtn(t *testing.T) {
 	extn := Extn("/dire/name.extn")
 	assert.Equal(t, ".extn", extn)
 
+	// success - double extension
+	extn = Extn("/dire/name.extn.extn")
+	assert.Equal(t, ".extn.extn", extn)
+
 	// success - empty extension
 	extn = Extn("/dire/name.")
 	assert.Equal(t, ".", extn)
@@ -43,8 +47,20 @@ func TestMatch(t *testing.T) {
 }
 
 func TestName(t *testing.T) {
-	// success
+	// success - full extension
 	name := Name("/dire/name.extn")
+	assert.Equal(t, "name", name)
+
+	// success - double extension
+	name = Name("/dire/name.extn.extn")
+	assert.Equal(t, "name", name)
+
+	// success - empty extension
+	name = Name("/dire/name.")
+	assert.Equal(t, "name", name)
+
+	// success - no extension
+	name = Name("/dire/name")
 	assert.Equal(t, "name", name)
 }
 
